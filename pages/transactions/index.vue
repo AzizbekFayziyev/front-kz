@@ -206,7 +206,7 @@ import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import AccountDrawer from './components/account-drawer.vue'
 import ContactsDrawer from './components/contacts-drawer.vue'
-import ArrowBackIcon from '@/assets/svg/arrow-back.svg?inline'
+import ArrowBackIcon from '@/assets/svg/arrow-back.svg'
 // @ts-ignore
 import BtcIcon from '@/assets/svg/btc.svg?inline'
 import InputOracle from '~/components/input-oracle.vue'
