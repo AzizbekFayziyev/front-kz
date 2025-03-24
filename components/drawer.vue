@@ -16,11 +16,11 @@
 
 <script>
 export default {
-  layout() {
-    return 'mobile'
-  },
   props: {
-    value: Boolean,
+    value: {
+      type: Boolean,
+      default: false,
+    },
     width: {
       type: String,
       default: '375px',
@@ -36,6 +36,9 @@ export default {
   watch: {
     value(newVal) {
       this.isOpen = newVal
+    },
+    isOpen(newVal) {
+      this.$emit('input', newVal)
     },
   },
   methods: {
@@ -60,7 +63,6 @@ export default {
     },
     closeDrawer() {
       this.isOpen = false
-      this.$emit('input', false)
     },
   },
 }

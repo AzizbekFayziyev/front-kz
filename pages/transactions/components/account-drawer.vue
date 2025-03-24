@@ -1,11 +1,11 @@
 <template>
-  <Drawer v-model="showDrawer" :value="showDrawer" @input="updateDrawer">
+  <Drawer v-model="internalDrawer">
     <div class="drawer">
       <span class="drawer-header">All Accounts</span>
       <div class="transactions-card-drawer-wrapper">
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -24,7 +24,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -42,7 +42,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -60,7 +60,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -78,7 +78,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -96,7 +96,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -114,7 +114,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -132,7 +132,7 @@
         </div>
         <div
           class="transactions-card transactions-card-drawer"
-          @click="showDrawer = true"
+          @click="updateDrawer(true)"
         >
           <div class="transactions-card-balance">
             <div class="transactions-card-balance-img">
@@ -163,6 +163,19 @@ export default {
   },
   props: {
     showDrawer: Boolean,
+  },
+  data() {
+    return {
+      internalDrawer: this.showDrawer,
+    }
+  },
+  watch: {
+    showDrawer(val) {
+      this.internalDrawer = val
+    },
+    internalDrawer(val) {
+      this.updateDrawer(val)
+    },
   },
   methods: {
     updateDrawer(value) {

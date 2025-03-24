@@ -1,9 +1,5 @@
 <template>
-  <Drawer
-    v-model="showContactsDrawer"
-    :value="showContactsDrawer"
-    @input="updateDrawer"
-  >
+  <Drawer v-model="internalDrawer">
     <div class="drawer">
       <div class="drawer-nav">
         <p>Back</p>
@@ -155,7 +151,6 @@
 
 <script>
 import Drawer from '@/components/drawer.vue'
-// @ts-ignore
 import ArrowBackIcon from '@/assets/svg/arrow-back.svg?inline'
 
 export default {
@@ -166,6 +161,19 @@ export default {
   },
   props: {
     showContactsDrawer: Boolean,
+  },
+  data() {
+    return {
+      internalDrawer: this.showContactsDrawer,
+    }
+  },
+  watch: {
+    showContactsDrawer(val) {
+      this.internalDrawer = val
+    },
+    internalDrawer(val) {
+      this.updateDrawer(val)
+    },
   },
   methods: {
     updateDrawer(value) {
