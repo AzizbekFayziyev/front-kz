@@ -228,6 +228,7 @@ export default class ConfirmPage extends Vue {
       scroll-behavior: smooth;
     }
     &-card {
+      cursor: pointer;
       background-color: #1d1c24;
       border-radius: 8px;
       padding: 8px;

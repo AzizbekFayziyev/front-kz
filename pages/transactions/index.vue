@@ -396,6 +396,7 @@ export default class TransactionPage extends Vue {
       scroll-behavior: smooth;
     }
     &-avatar {
+      cursor: pointer;
       padding: 16px 0;
       img {
         width: 50px;
