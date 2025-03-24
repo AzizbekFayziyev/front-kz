@@ -2,11 +2,8 @@
   <div>
     <div class="confirm">
       <div class="confirm-nav">
-        <div class="confirm-nav-back">
-          <ArrowBackIcon
-            class="confirm-nav-back-arrow"
-            @click="$router.back()"
-          />
+        <div class="confirm-nav-back" @click="$router.back()">
+          <ArrowBackIcon class="confirm-nav-back-arrow" />
           Internal transfer
         </div>
       </div>
@@ -156,9 +153,10 @@ export default class ConfirmPage extends Vue {
     margin-bottom: 18px;
 
     &-back {
+      cursor: pointer;
       display: flex;
       gap: 10px;
-      align-items: end;
+      align-items: center;
       font-family: 'Hanson';
       font-style: normal;
       font-weight: 700;

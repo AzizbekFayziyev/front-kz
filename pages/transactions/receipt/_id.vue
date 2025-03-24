@@ -2,11 +2,8 @@
   <div>
     <div class="receipt">
       <div class="receipt-nav">
-        <div class="receipt-nav-back">
-          <ArrowBackIcon
-            class="receipt-nav-back-arrow"
-            @click="$router.back()"
-          />
+        <div class="receipt-nav-back" @click="$router.back()">
+          <ArrowBackIcon class="receipt-nav-back-arrow" />
           Internal transfer
         </div>
       </div>
@@ -106,9 +103,10 @@ export default class ReceiptPage extends Vue {
     margin-bottom: 18px;
 
     &-back {
+      cursor: pointer;
       display: flex;
       gap: 10px;
-      align-items: end;
+      align-items: center;
       font-family: 'Hanson';
       font-style: normal;
       font-weight: 700;

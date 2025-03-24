@@ -3,11 +3,8 @@
     <div>
       <div class="transactions">
         <div class="transactions-nav">
-          <div class="transactions-nav-back">
-            <ArrowBackIcon
-              class="transactions-nav-back-arrow"
-              @click="$router.back()"
-            />
+          <div class="transactions-nav-back" @click="$router.back()">
+            <ArrowBackIcon class="transactions-nav-back-arrow" />
             Internal transfer
           </div>
         </div>
@@ -101,13 +98,11 @@
           </div>
           <div class="transactions-contacts-buttons">
             <div class="transactions-contacts-buttons-add">
-              <div class="transactions-contacts-buttons-add-img">
+              <button class="transactions-contacts-buttons-add-btn">
                 <img
                   :src="require('@/assets/svg/add-currency-filled.svg')"
                   alt=""
                 />
-              </div>
-              <button class="transactions-contacts-buttons-add-btn">
                 Add New Contact
               </button>
             </div>
@@ -310,9 +305,10 @@ export default class TransactionPage extends Vue {
     margin-bottom: 18px;
 
     &-back {
+      cursor: pointer;
       display: flex;
       gap: 10px;
-      align-items: end;
+      align-items: center;
       font-family: 'Hanson';
       font-style: normal;
       font-weight: 700;
@@ -387,6 +383,7 @@ export default class TransactionPage extends Vue {
     background-color: #15151f;
     padding: 12px;
     border-radius: 12px;
+
     &-wrapper {
       display: flex;
       gap: 12px;
@@ -398,6 +395,8 @@ export default class TransactionPage extends Vue {
     &-avatar {
       cursor: pointer;
       padding: 16px 0;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
       img {
         width: 50px;
         height: 50px;
@@ -423,12 +422,6 @@ export default class TransactionPage extends Vue {
         width: 100%;
       }
 
-      &-add-img {
-        position: absolute;
-        top: 7px;
-        left: 4px;
-      }
-
       &-add-btn,
       &-view-btn {
         border-radius: 6px;
@@ -438,12 +431,10 @@ export default class TransactionPage extends Vue {
       }
       &-add-btn {
         background-color: #15151f;
-        padding-left: 20px;
       }
       &-view-btn {
         background-color: #262633;
         border: none;
-        padding-right: 20px;
       }
     }
   }

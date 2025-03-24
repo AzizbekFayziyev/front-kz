@@ -3,8 +3,19 @@
     <label v-if="label" class="label">{{ label }}</label>
     <SearchIcon v-if="search" class="input-search" />
     <UserCircleIcon v-if="user" class="input-search" />
-    <input v-model="value" :type="type" :placeholder="placeholder" :style="{ paddingLeft }" :readonly="readonly" />
-    <component v-if="rightIcon" :is="rightIcon" class="input-right-action" @click="handleRightIconClick"/>
+    <input
+      v-model="value"
+      :type="type"
+      :placeholder="placeholder"
+      :style="{ paddingLeft }"
+      :readonly="readonly"
+    />
+    <component
+      :is="rightIcon"
+      v-if="rightIcon"
+      class="input-right-action"
+      @click="handleRightIconClick"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -29,8 +40,8 @@ import CloseIcon from '@/assets/svg/close-circle.svg?inline'
     UserCircleIcon,
     LiteCoinIcon,
     UsdIcon,
-    CloseIcon
-  }
+    CloseIcon,
+  },
 })
 export default class InputOracle extends Vue {
   @Prop({ default: '' }) readonly placeholder!: string
@@ -50,14 +61,13 @@ export default class InputOracle extends Vue {
   onChildChanged() {
     this.$emit('changed', this.value)
   }
-  
+
   handleRightIconClick() {
     if (this.rightIcon === 'CloseIcon') {
-      this.value = '';
-      this.$emit('clear');
+      this.value = ''
+      this.$emit('clear')
     }
   }
-
 
   get computedValue() {
     return this.value
@@ -68,11 +78,11 @@ export default class InputOracle extends Vue {
   }
 
   get paddingLeft() {
-    return this.search || this.user ? '30px' : '10px';
+    return this.search || this.user ? '35px' : '10px'
   }
 
   created() {
-    this.value = this.v;
+    this.value = this.v
   }
 }
 </script>
@@ -92,7 +102,6 @@ export default class InputOracle extends Vue {
   flex-direction: column;
   font-size: 16px;
   position: relative;
-
 
   &-search {
     position: absolute;
@@ -122,7 +131,7 @@ export default class InputOracle extends Vue {
     padding: 10px 12px;
     width: 100%;
     height: 41px;
-    background: #1e1d26;
+    background: #262633;
     border-radius: 8px;
     font-family: 'Reza Zulmi Alfaizi Sans';
     font-weight: 400;
