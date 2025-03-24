@@ -1,201 +1,209 @@
 <template>
-  <div>
-    <div class="transactions">
-      <div class="transactions-nav">
-        <div class="transactions-nav-back">
-          <ArrowBackIcon
-            class="transactions-nav-back-arrow"
-            @click="$router.back()"
-          />
-          Internal transfer
+  <client-only>
+    <div>
+      <div class="transactions">
+        <div class="transactions-nav">
+          <div class="transactions-nav-back">
+            <ArrowBackIcon
+              class="transactions-nav-back-arrow"
+              @click="$router.back()"
+            />
+            Internal transfer
+          </div>
         </div>
-      </div>
-      <div>
-        <swiper
-          ref="swiper"
-          :options="swiperOptions"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="(card, index) in cards" :key="index">
-            <div class="transactions-card" @click="showDrawer = true">
-              <div class="transactions-card-balance">
-                <div class="transactions-card-balance-img">
-                  <img :src="card.icon" />
-                </div>
-                <div class="transactions-card-balance-amount">
-                  <div class="transactions-card-balance-amount-currency">
-                    <span>{{ card.amount }}</span
-                    >(≈ {{ card.value }})
+        <div>
+          <swiper
+            ref="swiper"
+            :options="swiperOptions"
+            @slideChange="onSlideChange"
+          >
+            <swiper-slide v-for="(card, index) in cards" :key="index">
+              <div class="transactions-card" @click="showDrawer = true">
+                <div class="transactions-card-balance">
+                  <div class="transactions-card-balance-img">
+                    <img :src="card.icon" />
                   </div>
-                  <span class="transactions-card-balance-amount-account">{{
-                    card.account
-                  }}</span>
+                  <div class="transactions-card-balance-amount">
+                    <div class="transactions-card-balance-amount-currency">
+                      <span>{{ card.amount }}</span
+                      >(≈ {{ card.value }})
+                    </div>
+                    <span class="transactions-card-balance-amount-account">{{
+                      card.account
+                    }}</span>
+                  </div>
                 </div>
               </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+        <div class="transactions-dots">
+          <span
+            v-for="(dot, index) in cards.length"
+            :key="index"
+            :class="['dot', { active: index === activeIndex }]"
+            @click="goToSlide(index)"
+          ></span>
+        </div>
+        <div
+          v-if="!isInputLengthGreaterThanThree"
+          class="transactions-contacts"
+        >
+          <InputOracle
+            user="true"
+            placeholder="Username or ID"
+            :v="inputValue"
+            @changed="inputValue = $event"
+          />
+          <div class="transactions-contacts-wrapper">
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image.png')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
             </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-      <div class="transactions-dots">
-        <span
-          v-for="(dot, index) in cards.length"
-          :key="index"
-          :class="['dot', { active: index === activeIndex }]"
-          @click="goToSlide(index)"
-        ></span>
-      </div>
-      <div v-if="!isInputLengthGreaterThanThree" class="transactions-contacts">
-        <InputOracle
-          user="true"
-          placeholder="Username or ID"
-          :v="inputValue"
-          @changed="inputValue = $event"
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image-2.svg')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image-3.svg')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image-4.svg')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image-5.svg')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image.png')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+            <div class="transactions-contacts-avatar">
+              <div class="transactions-contacts-avatar-img">
+                <img :src="require('@/assets/svg/user-image-2.svg')" alt="" />
+              </div>
+              <span class="transactions-contacts-avatar-name">Nickname</span>
+            </div>
+          </div>
+          <div class="transactions-contacts-buttons">
+            <div class="transactions-contacts-buttons-add">
+              <div class="transactions-contacts-buttons-add-img">
+                <img
+                  :src="require('@/assets/svg/add-currency-filled.svg')"
+                  alt=""
+                />
+              </div>
+              <button class="transactions-contacts-buttons-add-btn">
+                Add New Contact
+              </button>
+            </div>
+            <div class="transactions-contacts-buttons-add">
+              <button
+                class="transactions-contacts-buttons-view-btn"
+                @click="showContactsDrawer = true"
+              >
+                View All Contacts
+                <img
+                  :src="require('@/assets/svg/tick.svg')"
+                  alt=""
+                  class="tick-icon"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="isInputLengthGreaterThanThree"
+          class="transactions-info-panel"
+        >
+          <InputOracle
+            placeholder="ID: 901941951"
+            right-icon="CloseIcon"
+            readonly="true"
+            @clear="handleClearInput"
+          />
+          <div class="transactions-info-panel-wrapper">
+            <div class="transactions-info-panel-card">
+              <div class="transactions-info-panel-card-img">
+                <img :src="require('@/assets/svg/profile.svg')" alt="" />
+              </div>
+              <span
+                >Check <br />
+                Profile</span
+              >
+            </div>
+            <div class="transactions-info-panel-card">
+              <div class="transactions-info-panel-card-img">
+                <img :src="require('@/assets/svg/escrow.png')" alt="" />
+              </div>
+              <span
+                >Check P2P<br />
+                Reviews</span
+              >
+            </div>
+            <div class="transactions-info-panel-card">
+              <div class="transactions-info-panel-card-img">
+                <img :src="require('@/assets/svg/escrow-reviews.svg')" alt="" />
+              </div>
+              <span
+                >Check <br />
+                Profile</span
+              >
+            </div>
+            <div class="transactions-info-panel-card">
+              <div class="transactions-info-panel-card-img">
+                <img :src="require('@/assets/svg/shops.png')" alt="" />
+              </div>
+              <span
+                >Check <br />
+                Profile</span
+              >
+            </div>
+            <div class="transactions-info-panel-card">
+              <div class="transactions-info-panel-card-img">
+                <img :src="require('@/assets/svg/profile.svg')" alt="" />
+              </div>
+              <span
+                >Check <br />
+                Profile</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="transactions-exchange">
+          <InputOracle placeholder="0.5 LTC" right-icon="LiteCoinIcon" />
+          <div class="transactions-exchange-img">
+            <img :src="require('@/assets/svg/transfer.svg')" alt="" />
+          </div>
+          <InputOracle placeholder="$52.12" right-icon="UsdIcon" />
+          <div class="transactions-exchange-memo">
+            <InputOracle placeholder="Memo" />
+          </div>
+        </div>
+        <ButtonOracle
+          text="Transfer"
+          color="orange"
+          @click="$router.push('transactions/confirm')"
         />
-        <div class="transactions-contacts-wrapper">
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image.png')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image-2.svg')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image-3.svg')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image-4.svg')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image-5.svg')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image.png')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-          <div class="transactions-contacts-avatar">
-            <div class="transactions-contacts-avatar-img">
-              <img :src="require('@/assets/svg/user-image-2.svg')" alt="" />
-            </div>
-            <span class="transactions-contacts-avatar-name">Nickname</span>
-          </div>
-        </div>
-        <div class="transactions-contacts-buttons">
-          <div class="transactions-contacts-buttons-add">
-            <div class="transactions-contacts-buttons-add-img">
-              <img
-                :src="require('@/assets/svg/add-currency-filled.svg')"
-                alt=""
-              />
-            </div>
-            <button class="transactions-contacts-buttons-add-btn">
-              Add New Contact
-            </button>
-          </div>
-          <div class="transactions-contacts-buttons-add">
-            <button
-              class="transactions-contacts-buttons-view-btn"
-              @click="showContactsDrawer = true"
-            >
-              View All Contacts
-              <img
-                :src="require('@/assets/svg/tick.svg')"
-                alt=""
-                class="tick-icon"
-              />
-            </button>
-          </div>
-        </div>
+        <AccountDrawer :showDrawer.sync="showDrawer" />
+        <ContactsDrawer :showContactsDrawer.sync="showContactsDrawer" />
       </div>
-      <div v-if="isInputLengthGreaterThanThree" class="transactions-info-panel">
-        <InputOracle
-          placeholder="ID: 901941951"
-          right-icon="CloseIcon"
-          readonly="true"
-          @clear="handleClearInput"
-        />
-        <div class="transactions-info-panel-wrapper">
-          <div class="transactions-info-panel-card">
-            <div class="transactions-info-panel-card-img">
-              <img :src="require('@/assets/svg/profile.svg')" alt="" />
-            </div>
-            <span
-              >Check <br />
-              Profile</span
-            >
-          </div>
-          <div class="transactions-info-panel-card">
-            <div class="transactions-info-panel-card-img">
-              <img :src="require('@/assets/svg/escrow.png')" alt="" />
-            </div>
-            <span
-              >Check P2P<br />
-              Reviews</span
-            >
-          </div>
-          <div class="transactions-info-panel-card">
-            <div class="transactions-info-panel-card-img">
-              <img :src="require('@/assets/svg/escrow-reviews.svg')" alt="" />
-            </div>
-            <span
-              >Check <br />
-              Profile</span
-            >
-          </div>
-          <div class="transactions-info-panel-card">
-            <div class="transactions-info-panel-card-img">
-              <img :src="require('@/assets/svg/shops.png')" alt="" />
-            </div>
-            <span
-              >Check <br />
-              Profile</span
-            >
-          </div>
-          <div class="transactions-info-panel-card">
-            <div class="transactions-info-panel-card-img">
-              <img :src="require('@/assets/svg/profile.svg')" alt="" />
-            </div>
-            <span
-              >Check <br />
-              Profile</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="transactions-exchange">
-        <InputOracle placeholder="0.5 LTC" right-icon="LiteCoinIcon" />
-        <div class="transactions-exchange-img">
-          <img :src="require('@/assets/svg/transfer.svg')" alt="" />
-        </div>
-        <InputOracle placeholder="$52.12" right-icon="UsdIcon" />
-        <div class="transactions-exchange-memo">
-          <InputOracle placeholder="Memo" />
-        </div>
-      </div>
-      <ButtonOracle
-        text="Transfer"
-        color="orange"
-        @click="$router.push('transactions/confirm')"
-      />
-      <AccountDrawer :showDrawer.sync="showDrawer" />
-      <ContactsDrawer :showContactsDrawer.sync="showContactsDrawer" />
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script lang="ts">
