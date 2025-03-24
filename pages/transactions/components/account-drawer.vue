@@ -1,5 +1,5 @@
 <template>
-  <Drawer :value="showDrawer" @input="updateDrawer">
+  <Drawer v-model="showDrawer" :value="showDrawer" @input="updateDrawer">
     <div class="drawer">
       <span class="drawer-header">All Accounts</span>
       <div class="transactions-card-drawer-wrapper">

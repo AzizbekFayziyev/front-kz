@@ -1,5 +1,9 @@
 <template>
-  <Drawer :value="showContactsDrawer" @input="updateDrawer">
+  <Drawer
+    v-model="showContactsDrawer"
+    :value="showContactsDrawer"
+    @input="updateDrawer"
+  >
     <div class="drawer">
       <div class="drawer-nav">
         <p>Back</p>
