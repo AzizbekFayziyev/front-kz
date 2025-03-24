@@ -197,7 +197,7 @@
         <ButtonOracle
           text="Transfer"
           color="orange"
-          @click="$router.push('transactions/confirm')"
+          @click="$router.push('/transactions/confirm')"
         />
         <AccountDrawer :showDrawer.sync="showDrawer" />
         <ContactsDrawer :showContactsDrawer.sync="showContactsDrawer" />
